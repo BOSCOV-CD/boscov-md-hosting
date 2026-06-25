@@ -52,40 +52,16 @@ async function startBOSCOV(ownerNumber) {
         console.log('Connection closed. Reconnecting:', shouldReconnect)
         
         if(shouldReconnect) {
-            startBOSCOV(ownerNumber)
-        } else {
-            console.log('❌ Logged out. Delete session and scan QR again.')
-        }
+             startBOSCOV(ownerNumber)
+    } else {
+        console.log('❌ Logged out. Delete session and scan QR again.')
     }
-    
-    if(connection === 'open') {
-        console.log('✅ BOSCOV MD session ' + ownerNumber + ' is ONLINE!')
-    }
+  }
 })
-        if (qr) {
-            console.log(`📱 OWNER QR CODE - Scan for ${ownerNumber}:`)
-          
-        }
 
-        if (connection === 'close') {
-            const shouldReconnect = lastDisconnect?.error instanceof Boom?
-                lastDisconnect.error.output.statusCode!== DisconnectReason.loggedOut : true
+sock.ev.on('creds.update', saveCreds)
 
-            if (shouldReconnect) {
-                console.log(`⚠️ Connection lost for ${ownerNumber}, reconnecting...`)
-                startBOSCOV(ownerNumber)
-            } else {
-                console.log(`❌ ${ownerNumber} logged out. Delete session to re-scan.`)
-                sessions.delete(ownerNumber)
-            }
-        }
-
-        if (connection === 'open') {
-            console.log(`✅ BOSCOV MD session ${ownerNumber} is ONLINE!`)
-        }
-    })
-
-    sock.ev.on('messages.upsert', async ({ messages }) => {
+sock.ev.on('messages.upsert', async ({ messages }) => {
         const m = messages[0]
         if (!m.message || m.key.fromMe) return
 
