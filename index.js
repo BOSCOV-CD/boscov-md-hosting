@@ -22,9 +22,16 @@ const SESSIONS_DIR = './sessions'
 fs.ensureDirSync(SESSIONS_DIR)
 
 async function startBOSCOV(ownerNumber) {
-    const sessionPath = path.join(SESSIONS_DIR, ownerNumber)
-    // await fs.remove(sessionPath).catch(() => {}) // COMMENTED - Stop deleting session
-    fs.ensureDirSync(sessionPath)
+ 25  const sessionPath = path.join(SESSIONS_DIR, ownerNumber)
+    
+    if (fs.existsSync(sessionPath)) {
+        console.log('✅ Using existing session for', ownerNumber)
+    } else {
+        console.log('🆕 Creating new session for', ownerNumber)
+    }
+    
+27  fs.ensureDirSync(sessionPath)
+28  console.log('✅ Starting session for', ownerNumber)  
     console.log('✅ Starting session for', ownerNumber)
    // console.log('🗑️ Deleted old session for', ownerNumber)
     const { state, saveCreds } = await useMultiFileAuthState(sessionPath)
