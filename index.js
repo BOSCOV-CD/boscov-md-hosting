@@ -22,7 +22,7 @@ const SESSIONS_DIR = './sessions'
 fs.ensureDirSync(SESSIONS_DIR)
 
 async function startBOSCOV(ownerNumber) {
- 25  const sessionPath = path.join(SESSIONS_DIR, ownerNumber)
+ const sessionPath = path.join(SESSIONS_DIR, ownerNumber)
     
     if (fs.existsSync(sessionPath)) {
         console.log('✅ Using existing session for', ownerNumber)
