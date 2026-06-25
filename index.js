@@ -26,7 +26,7 @@ async function startBOSCOV(ownerNumber) {
     // await fs.remove(sessionPath).catch(() => {}) // COMMENTED - Stop deleting session
     fs.ensureDirSync(sessionPath)
     console.log('✅ Starting session for', ownerNumber)
-    console.log('🗑️  Deleted old session for', ownerNumber)
+   // console.log('🗑️ Deleted old session for', ownerNumber)
     const { state, saveCreds } = await useMultiFileAuthState(sessionPath)
     const sock = makeWASocket({
         logger: pino({ level: 'silent' }),
