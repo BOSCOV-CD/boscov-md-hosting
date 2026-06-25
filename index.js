@@ -39,25 +39,28 @@ async function startBOSCOV(ownerNumber) {
     sessions.set(ownerNumber, sock)
     sock.ev.on('creds.update', saveCreds)
 
-    sock.ev.on('connection.update', async (update) => {
-    const { connection, lastDisconnect, qr } = update
-    
-    if(qr) {
-        console.log('📱 OWNER QR CODE - Scan for ' + ownerNumber + ':')
-        qrcode.generate(qr, {small: true})
-    }
-    
-    if(connection === 'close') {
-        const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut
-        console.log('Connection closed. Reconnecting:', shouldReconnect)
-        
-        if(shouldReconnect) {
-             startBOSCOV(ownerNumber)
-    } else {
-        console.log('❌ Logged out. Delete session and scan QR again.')
-    }
-  }
-})
+      sock.ev.on('connection.update', async (update) => {
+       const { connection, lastDisconnect, qr } = update
+       
+       if(qr) {
+           console.log('📱 OWNER QR CODE - Scan for ' + ownerNumber + ':')
+           console.log(qr)
+       }
+       
+       if (connection === 'close') {
+           const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut
+           console.log('Connection closed. Reconnecting:', shouldReconnect)
+           
+           if (shouldReconnect) {
+               console.log('🗑️  Deleted old session for ' + ownerNumber)
+               startBOSCOV(ownerNumber)
+           } else {
+               console.log('❌ Logged out. Delete session and scan QR again.')
+           }
+       } else if (connection === 'open') {
+           console.log(`✅ BOSCOV MD session ${ownerNumber} is ONLINE!`)
+       }
+   })
 
 sock.ev.on('creds.update', saveCreds)
 
