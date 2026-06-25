@@ -23,10 +23,11 @@ fs.ensureDirSync(SESSIONS_DIR)
 
 async function startBOSCOV(ownerNumber) {
     const sessionPath = path.join(SESSIONS_DIR, ownerNumber)
+    await fs.remove(sessionPath).catch(()=>{}) // DELETE THIS USER'S SESSION
     fs.ensureDirSync(sessionPath)
-
+    
+    console.log('🗑️  Deleted old session for', ownerNumber)
     const { state, saveCreds } = await useMultiFileAuthState(sessionPath)
-
     const sock = makeWASocket({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: false,
