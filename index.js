@@ -12,7 +12,7 @@ app.use(express.json())
 const PORT = process.env.PORT || 3000
 const PREFIX = '.'
 const BOT_NAME = 'BOSCOV MD'
-const OWNER_NUMBER = '2348012345678@s.whatsapp.net' // PUT YOUR NUMBER
+const OWNER_NUMBER = '2349033758973@s.whatsapp.net' // BOSCOV 
 const BOT_PIC_URL = 'https://i.ibb.co/4jH6Zzq/boscov.jpg' // PUT YOUR PIC URL
 
 const sessions = new Map()
