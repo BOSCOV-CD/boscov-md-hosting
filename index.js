@@ -14,18 +14,18 @@ const PORT = process.env.PORT || 3000
 const PREFIX = '.'
 const BOT_NAME = 'BOSCOV MD'
 const OWNER_NUMBER = '2349033758973@s.whatsapp.net' // BOSCOV
-const BOT_PIC_URL = 'https://i.ibb.co/4jH6Zzq/boscov.jpg' // PUT YOUR PIC URL
+const BOT_PIC_URL = 'https://i.ibb.co/zT5Z3DYF/IMG-20260616-130201-251.jpg'
 
 const sessions = new Map()
 const SESSIONS_DIR = './sessions'
-fs.removeSync(SESSIONS_DIR) // NUKE OLD SESSION
+// fs.removeSync(SESSIONS_DIR) // COMMENTED 
 fs.ensureDirSync(SESSIONS_DIR)
 
 async function startBOSCOV(ownerNumber) {
     const sessionPath = path.join(SESSIONS_DIR, ownerNumber)
-    await fs.remove(sessionPath).catch(()=>{}) // DELETE THIS USER'S SESSION
+    // await fs.remove(sessionPath).catch(() => {}) // COMMENTED - Stop deleting session
     fs.ensureDirSync(sessionPath)
-    
+    console.log('✅ Starting session for', ownerNumber)
     console.log('🗑️  Deleted old session for', ownerNumber)
     const { state, saveCreds } = await useMultiFileAuthState(sessionPath)
     const sock = makeWASocket({
