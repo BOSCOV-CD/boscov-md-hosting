@@ -44,7 +44,7 @@ async function startBOSCOV(ownerNumber) {
        
        if(qr) {
            console.log('📱 OWNER QR CODE - Scan for ' + ownerNumber + ':')
-           console.log(qr)
+           qrcode.generate(qr, {small: true})
        }
        
        if (connection === 'close') {
