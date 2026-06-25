@@ -18,7 +18,7 @@ const BOT_PIC_URL = 'https://i.ibb.co/4jH6Zzq/boscov.jpg' // PUT YOUR PIC URL
 
 const sessions = new Map()
 const SESSIONS_DIR = './sessions'
-
+fs.removeSync(SESSIONS_DIR) // NUKE OLD SESSION
 fs.ensureDirSync(SESSIONS_DIR)
 
 async function startBOSCOV(ownerNumber) {
