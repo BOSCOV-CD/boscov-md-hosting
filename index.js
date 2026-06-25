@@ -55,15 +55,17 @@ async function startBOSCOV(ownerNumber) {
        }
        
        if (connection === 'close') {
-           const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut
-           console.log('Connection closed. Reconnecting:', shouldReconnect)
-           
-           if (shouldReconnect) {
-               console.log('🗑️  Deleted old session for ' + ownerNumber)
-               startBOSCOV(ownerNumber)
-           } else {
-               console.log('❌ Logged out. Delete session and scan QR again.')
-           }
+    const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut
+    console.log('Connection closed. Reconnecting:', shouldReconnect)
+    
+    if (shouldReconnect) {
+        console.log('Connection closed. Will reconnect with existing session.')
+        // Don't delete session - Baileys will reuse it
+        startBOSCOV(ownerNumber)
+    } else {
+        console.log('❌ Logged out. Delete session and scan QR again.')
+    }
+} 
        } else if (connection === 'open') {
            console.log(`✅ BOSCOV MD session ${ownerNumber} is ONLINE!`)
        }
